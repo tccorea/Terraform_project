@@ -203,7 +203,7 @@ resource "aws_security_group" "nessus_agent_sc_lab_secgrp" {
 
 # Create an EC2 Instance Nessus manager
 resource "aws_instance" "nessus_manager_sc_lab_instance" {
-  ami           = "ami-0fc44ebb9c29686fa" #
+  ami           = "ami-XXXXXXXXXXXXXXXXXX" #
   instance_type = "t3.large"
   subnet_id     = aws_subnet.nessus_internal_lab_pub_subnet.id
   vpc_security_group_ids = [aws_security_group.nessus_manager_sc_lab_secgrp.id]
@@ -230,7 +230,7 @@ resource "aws_instance" "nessus_manager_sc_lab_instance" {
 
 #Create an EC2 Instance Nessus agent
 resource "aws_instance" "nessus_agent_1_sc_lab_instance" {
-  ami           = "ami-07036bb7915e77a73" #Nessus agent AMI
+  ami           = "ami-XXXXXXXXXXXXXXXXXX" #Nessus agent AMI
   instance_type = "t3.medium"
   subnet_id     = aws_subnet.nessus_internal_lab_pub_subnet.id
   vpc_security_group_ids = [aws_security_group.nessus_agent_sc_lab_secgrp.id]
@@ -245,7 +245,7 @@ resource "aws_instance" "nessus_agent_1_sc_lab_instance" {
                 sleep 30
                 systemctl start nessusagent
                 systemctl enable nessusagent
-                /opt/nessus_agent/sbin/nessuscli agent link --key=a76e678c737015ec1f6dc4982d4e5e233ac6ca016fb5e0d315e80fd2053a18f9 --host=10.0.1.202 --port=8834
+                /opt/nessus_agent/sbin/nessuscli agent link --key=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX9 --host=10.0.1.202 --port=8834
                 EOF
 
     tags = {
@@ -280,7 +280,7 @@ resource "aws_eip_association" "nessus_agent_sc_lab_instance_association" {
 resource "aws_route53_record" "nessus-manager" {
   name           = "nessus-manager-sc2.labs.university.tenable.com"
   type           = "A"
-  zone_id        = "Z3DOPFAC5RYFQF"
+  zone_id        = "XXXXXXXXXXXX"
   ttl            = "300"
   records        = [aws_eip.nessus_manager_sc_lab_pub_ip.public_ip]
 }
@@ -290,7 +290,7 @@ resource "aws_route53_record" "nessus-manager" {
 resource "aws_route53_record" "nessus-agent-53" {
   name           = "nessus-agent-sc2.labs.university.tenable.com"
   type           = "A"
-  zone_id        = "Z3DOPFAC5RYFQF"
+  zone_id        = "XXXXXXXXXX"
   ttl            = "300"
   records        = [aws_eip.nessus_agent_sc_lab_pub_ip.public_ip]
 }
